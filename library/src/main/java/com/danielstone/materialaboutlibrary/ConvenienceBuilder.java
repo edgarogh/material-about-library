@@ -2,7 +2,6 @@ package com.danielstone.materialaboutlibrary;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -69,36 +68,30 @@ public class ConvenienceBuilder {
 
     public static MaterialAboutItemOnClickAction createWebViewDialogOnClickAction(final Context c, final CharSequence dialogTitle, final CharSequence dialogNegativeButton, final String htmlString, final boolean isStringUrl, final boolean supportZoom) {
 
-        return new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(c);
-                alertBuilder.setTitle(dialogTitle);
+        return () -> {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(c);
+            alertBuilder.setTitle(dialogTitle);
 
-                final WebView wv = new WebView(c);
-                wv.getSettings().setSupportZoom(supportZoom);
-                if (!supportZoom) {
-                    wv.getSettings().setLoadWithOverviewMode(true);
-                    wv.getSettings().setUseWideViewPort(true);
-                }
-                if (isStringUrl) {
-                    wv.loadUrl(htmlString);
-                } else {
-                    wv.loadData(htmlString, "text/html; charset=utf-8", "UTF-8");
-                }
-
-                alertBuilder.setView(wv);
-                alertBuilder.setNegativeButton(dialogNegativeButton, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        wv.destroy();
-                        dialog.dismiss();
-                    }
-                });
-
-                final AlertDialog dialog = alertBuilder.create();
-                dialog.show();
+            final WebView wv = new WebView(c);
+            wv.getSettings().setSupportZoom(supportZoom);
+            if (!supportZoom) {
+                wv.getSettings().setLoadWithOverviewMode(true);
+                wv.getSettings().setUseWideViewPort(true);
             }
+            if (isStringUrl) {
+                wv.loadUrl(htmlString);
+            } else {
+                wv.loadData(htmlString, "text/html; charset=utf-8", "UTF-8");
+            }
+
+            alertBuilder.setView(wv);
+            alertBuilder.setNegativeButton(dialogNegativeButton, (dialog, id) -> {
+                wv.destroy();
+                dialog.dismiss();
+            });
+
+            final AlertDialog dialog = alertBuilder.create();
+            dialog.show();
         };
     }
 
@@ -118,17 +111,14 @@ public class ConvenienceBuilder {
 
 
     public static MaterialAboutItemOnClickAction createWebsiteOnClickAction(final Context c, final Uri websiteUrl) {
-        return new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(websiteUrl);
-                try {
-                    c.startActivity(i);
-                } catch (Exception e) {
-                    // No activity to handle intent
-                    Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
-                }
+        return () -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(websiteUrl);
+            try {
+                c.startActivity(i);
+            } catch (Exception e) {
+                // No activity to handle intent
+                Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -170,15 +160,12 @@ public class ConvenienceBuilder {
                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         }
 
-        return new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                try {
-                    c.startActivity(goToMarket);
-                } catch (ActivityNotFoundException e) {
-                    c.startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=" + c.getPackageName())));
-                }
+        return () -> {
+            try {
+                c.startActivity(goToMarket);
+            } catch (ActivityNotFoundException e) {
+                c.startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://play.google.com/store/apps/details?id=" + c.getPackageName())));
             }
         };
     }
@@ -219,15 +206,12 @@ public class ConvenienceBuilder {
         final Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + email));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
 
-        return new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                try {
-                    c.startActivity(Intent.createChooser(emailIntent, chooserTitle));
-                } catch (Exception e) {
-                    // No activity to handle intent
-                    Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
-                }
+        return () -> {
+            try {
+                c.startActivity(Intent.createChooser(emailIntent, chooserTitle));
+            } catch (Exception e) {
+                // No activity to handle intent
+                Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -266,15 +250,12 @@ public class ConvenienceBuilder {
         final Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
         phoneIntent.setData(Uri.parse("tel:" + number));
 
-        return new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                try {
-                    c.startActivity(phoneIntent);
-                } catch (Exception e) {
-                    // No activity to handle intent
-                    Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
-                }
+        return () -> {
+            try {
+                c.startActivity(phoneIntent);
+            } catch (Exception e) {
+                // No activity to handle intent
+                Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -309,15 +290,12 @@ public class ConvenienceBuilder {
     public static MaterialAboutItemOnClickAction createMapOnClickAction(final Context c, String addressQuery) {
         final Intent mapIntent = new Intent(Intent.ACTION_VIEW);
         mapIntent.setData(Uri.parse("geo:0,0").buildUpon().appendQueryParameter("q", addressQuery).build());
-        return new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                try {
-                    c.startActivity(mapIntent);
-                } catch (Exception e) {
-                    // No activity to handle intent
-                    Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
-                }
+        return () -> {
+            try {
+                c.startActivity(mapIntent);
+            } catch (Exception e) {
+                // No activity to handle intent
+                Toast.makeText(c, R.string.mal_activity_exception, Toast.LENGTH_SHORT).show();
             }
         };
     }

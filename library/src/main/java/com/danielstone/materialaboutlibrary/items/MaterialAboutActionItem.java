@@ -140,27 +140,15 @@ public class MaterialAboutActionItem extends MaterialAboutItem {
         }
         holder.icon.setLayoutParams(params);
 
-        int pL = 0, pT = 0, pR = 0, pB = 0;
-        if (Build.VERSION.SDK_INT < 21) {
-            pL = holder.view.getPaddingLeft();
-            pT = holder.view.getPaddingTop();
-            pR = holder.view.getPaddingRight();
-            pB = holder.view.getPaddingBottom();
-        }
-
         if (item.getOnClickAction() != null || item.getOnLongClickAction() != null) {
             TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, outValue, true);
+            context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             holder.view.setBackgroundResource(outValue.resourceId);
         } else {
             holder.view.setBackgroundResource(0);
         }
         holder.setOnClickAction(item.getOnClickAction());
         holder.setOnLongClickAction(item.getOnLongClickAction());
-
-        if (Build.VERSION.SDK_INT < 21) {
-            holder.view.setPadding(pL, pT, pR, pB);
-        }
     }
 
     @Override
@@ -315,9 +303,9 @@ public class MaterialAboutActionItem extends MaterialAboutItem {
         MaterialAboutActionItemViewHolder(View view) {
             super(view);
             this.view = view;
-            icon = (ImageView) view.findViewById(R.id.mal_item_image);
-            text = (TextView) view.findViewById(R.id.mal_item_text);
-            subText = (TextView) view.findViewById(R.id.mal_action_item_subtext);
+            icon = view.findViewById(R.id.mal_item_image);
+            text = view.findViewById(R.id.mal_item_text);
+            subText = view.findViewById(R.id.mal_action_item_subtext);
         }
 
         public void setOnClickAction(MaterialAboutItemOnClickAction onClickAction) {
@@ -392,7 +380,6 @@ public class MaterialAboutActionItem extends MaterialAboutItem {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 this.subText = Html.fromHtml(subTextHtml, Html.FROM_HTML_MODE_LEGACY);
             } else {
-                //noinspection deprecation
                 this.subText = Html.fromHtml(subTextHtml);
             }
             this.subTextRes = 0;

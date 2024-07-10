@@ -254,30 +254,18 @@ public class MyCustomItem extends MaterialAboutItem {
         }
         holder.icon.setLayoutParams(params);
 
-        int pL = 0, pT = 0, pR = 0, pB = 0;
-        if (Build.VERSION.SDK_INT < 21) {
-            pL = holder.view.getPaddingLeft();
-            pT = holder.view.getPaddingTop();
-            pR = holder.view.getPaddingRight();
-            pB = holder.view.getPaddingBottom();
-        }
-
         if (item.getOnClickListener() != null) {
             TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, outValue, true);
+            context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             holder.view.setBackgroundResource(outValue.resourceId);
             holder.onClickListener = item.getOnClickListener();
             holder.view.setSoundEffectsEnabled(true);
         } else {
             TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, outValue, false);
+            context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, false);
             holder.view.setBackgroundResource(outValue.resourceId);
             holder.onClickListener = null;
             holder.view.setSoundEffectsEnabled(false);
-        }
-
-        if (Build.VERSION.SDK_INT < 21) {
-            holder.view.setPadding(pL, pT, pR, pB);
         }
     }
 
@@ -330,7 +318,6 @@ public class MyCustomItem extends MaterialAboutItem {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 this.subText = Html.fromHtml(subTextHtml, Html.FROM_HTML_MODE_LEGACY);
             } else {
-                //noinspection deprecation
                 this.subText = Html.fromHtml(subTextHtml);
             }
             this.subTextRes = 0;

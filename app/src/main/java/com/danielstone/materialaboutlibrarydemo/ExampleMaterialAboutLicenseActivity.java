@@ -15,7 +15,7 @@ public class ExampleMaterialAboutLicenseActivity extends ExampleMaterialAboutAct
 
     @Override
     protected CharSequence getActivityTitle() {
-        return getString(R.string.mal_title_licenses);
+        return getString(com.danielstone.materialaboutlibrary.R.string.mal_title_licenses);
     }
 
     @Override

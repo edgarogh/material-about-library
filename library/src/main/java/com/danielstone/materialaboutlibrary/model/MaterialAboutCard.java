@@ -3,7 +3,6 @@ package com.danielstone.materialaboutlibrary.model;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.StringRes;
-import androidx.annotation.StyleRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danielstone.materialaboutlibrary.items.MaterialAboutItem;
@@ -25,7 +24,6 @@ public class MaterialAboutCard {
 
     private RecyclerView.Adapter customAdapter = null;
     private ArrayList<MaterialAboutItem> items = new ArrayList<>();
-    ;
 
     private MaterialAboutCard(Builder builder) {
         this.title = builder.title;

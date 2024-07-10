@@ -3,7 +3,7 @@ package com.danielstone.materialaboutlibrary.items;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import android.util.TypedValue;
@@ -93,27 +93,15 @@ public class MaterialAboutTitleItem extends MaterialAboutItem {
             holder.icon.setImageResource(drawableRes);
         }
 
-        int pL = 0, pT = 0, pR = 0, pB = 0;
-        if (Build.VERSION.SDK_INT < 21) {
-            pL = holder.view.getPaddingLeft();
-            pT = holder.view.getPaddingTop();
-            pR = holder.view.getPaddingRight();
-            pB = holder.view.getPaddingBottom();
-        }
-
         if (item.getOnClickAction() != null || item.getOnLongClickAction() != null) {
             TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, outValue, true);
+            context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             holder.view.setBackgroundResource(outValue.resourceId);
         } else {
             holder.view.setBackgroundResource(0);
         }
         holder.setOnClickAction(item.getOnClickAction());
         holder.setOnLongClickAction(item.getOnLongClickAction());
-
-        if (Build.VERSION.SDK_INT < 21) {
-            holder.view.setPadding(pL, pT, pR, pB);
-        }
     }
 
     @Override

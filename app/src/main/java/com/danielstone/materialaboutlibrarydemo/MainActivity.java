@@ -19,12 +19,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button fragmentButton = (Button) findViewById(R.id.fragment_button);
-        fragmentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, ExampleMaterialAboutFragmentActivity.class);
-                startActivity(i);
-            }
+        fragmentButton.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, ExampleMaterialAboutFragmentActivity.class);
+            startActivity(i);
         });
 
     }
@@ -49,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(this, ExampleMaterialAboutActivity.class);
             startActivity(i);

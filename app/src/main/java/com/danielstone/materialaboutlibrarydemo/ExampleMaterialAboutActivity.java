@@ -6,8 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.danielstone.materialaboutlibrary.ConvenienceBuilder;
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
-import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
@@ -57,12 +55,7 @@ public class ExampleMaterialAboutActivity extends MaterialAboutActivity {
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_code_tags)
                         .sizeDp(18))
-                .setOnClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        Snackbar.make(getRecyclerView(), "Test", Snackbar.LENGTH_SHORT).show();
-                    }
-                })
+                .setOnClickAction(() -> Snackbar.make(getRecyclerView(), "Test", Snackbar.LENGTH_SHORT).show())
                 .build());
 
         advancedCardBuilder.addItem(new MaterialAboutActionItem.Builder()
@@ -70,12 +63,7 @@ public class ExampleMaterialAboutActivity extends MaterialAboutActivity {
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_hand_pointing_right)
                         .sizeDp(18))
-                .setOnLongClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        Toast.makeText(c, "Long pressed", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                .setOnLongClickAction(() -> Toast.makeText(c, "Long pressed", Toast.LENGTH_SHORT).show())
                 .build());
 
         advancedCardBuilder.addItem(new MyCustomItem.Builder()
@@ -109,15 +97,12 @@ public class ExampleMaterialAboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_refresh)
                         .sizeDp(18))
                 .build();
-        item.setOnClickAction(new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                getList().getCards().get(4).getItems().remove(getList().getCards().get(4).getItems().indexOf(item));
-                int newIndex = ((int) (Math.random() * 5));
-                getList().getCards().get(4).getItems().add(newIndex, item);
-                item.setSubText("Random number: " + ((int) (Math.random() * 10)));
-                setMaterialAboutList(getList());
-            }
+        item.setOnClickAction(() -> {
+            getList().getCards().get(4).getItems().remove(getList().getCards().get(4).getItems().indexOf(item));
+            int newIndex = ((int) (Math.random() * 5));
+            getList().getCards().get(4).getItems().add(newIndex, item);
+            item.setSubText("Random number: " + ((int) (Math.random() * 10)));
+            setMaterialAboutList(getList());
         });
 
         return item;
@@ -149,7 +134,7 @@ public class ExampleMaterialAboutActivity extends MaterialAboutActivity {
 
     @Override
     protected CharSequence getActivityTitle() {
-        return getString(R.string.mal_title_about);
+        return getString(com.danielstone.materialaboutlibrary.R.string.mal_title_about);
     }
 
     @NonNull

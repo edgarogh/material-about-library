@@ -2,12 +2,10 @@ package com.danielstone.materialaboutlibrarydemo;
 
 import android.content.Context;
 import android.os.Handler;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutFragment;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
-import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -25,12 +23,9 @@ public class ExampleMaterialAboutFragment extends MaterialAboutFragment {
                         .icon(CommunityMaterial.Icon.cmd_refresh)
                         .sizeDp(18))
                 .build();
-        item.setOnClickAction(new MaterialAboutItemOnClickAction() {
-            @Override
-            public void onClick() {
-                item.setSubText("Random number: " + ((int) (Math.random() * 10)));
-                refreshMaterialAboutList();
-            }
+        item.setOnClickAction(() -> {
+            item.setSubText("Random number: " + ((int) (Math.random() * 10)));
+            refreshMaterialAboutList();
         });
         return item;
 
@@ -59,7 +54,7 @@ public class ExampleMaterialAboutFragment extends MaterialAboutFragment {
         @Override
         public void run() {
             Log.i("MaterialAboutFragment", "Updating with time");
-            if (getList().getCards().size() > 0) {
+            if (!getList().getCards().isEmpty()) {
                 ((MaterialAboutActionItem) getList().getCards().get(2).getItems().get(7)).setSubText("" + System.currentTimeMillis());
                 refreshMaterialAboutList();
             }
@@ -72,12 +67,6 @@ public class ExampleMaterialAboutFragment extends MaterialAboutFragment {
     public void onResume() {
         super.onResume();
         runnable.run();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
     }
 
 }

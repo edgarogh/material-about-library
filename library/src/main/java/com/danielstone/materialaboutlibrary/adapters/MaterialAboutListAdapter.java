@@ -2,8 +2,6 @@ package com.danielstone.materialaboutlibrary.adapters;
 
 import android.content.Context;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.cardview.widget.CardView;
@@ -141,7 +139,7 @@ public class MaterialAboutListAdapter extends RecyclerView.Adapter<MaterialAbout
         return differ.getCurrentList();
     }
 
-    class MaterialAboutListViewHolder extends RecyclerView.ViewHolder {
+    public class MaterialAboutListViewHolder extends RecyclerView.ViewHolder {
 
         final View cardView;
         final TextView title;

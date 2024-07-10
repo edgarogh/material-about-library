@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 
-import androidx.core.content.ContextCompat;
-
 import com.danielstone.materialaboutlibrary.ConvenienceBuilder;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
-import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
@@ -50,13 +47,10 @@ public class Demo {
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_book)
                         .sizeDp(18))
-                .setOnClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        Intent intent = new Intent(c, ExampleMaterialAboutLicenseActivity.class);
-                        intent.putExtra(ExampleMaterialAboutActivity.THEME_EXTRA, theme);
-                        c.startActivity(intent);
-                    }
+                .setOnClickAction(() -> {
+                    Intent intent = new Intent(c, ExampleMaterialAboutLicenseActivity.class);
+                    intent.putExtra(ExampleMaterialAboutActivity.THEME_EXTRA, theme);
+                    c.startActivity(intent);
                 })
                 .build());
 
@@ -135,7 +129,7 @@ public class Demo {
         MaterialAboutCard.Builder otherCardBuilder = new MaterialAboutCard.Builder();
         otherCardBuilder.title("Other");
         otherCardBuilder.outline(false);
-        
+
         otherCardBuilder.cardColor(Color.parseColor("#c0cfff"));
 
         otherCardBuilder.addItem(new MaterialAboutActionItem.Builder()

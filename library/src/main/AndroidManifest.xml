@@ -1,4 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.danielstone.materialaboutlibrary">
-
-</manifest>
+<manifest package="com.danielstone.materialaboutlibrary" />

@@ -91,11 +91,6 @@ public abstract class MaterialAboutFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
     protected void refreshMaterialAboutList() {
         setMaterialAboutList(list);
     }

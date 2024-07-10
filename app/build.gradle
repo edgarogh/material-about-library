@@ -6,11 +6,12 @@ def versionPatch = 2
 def versionBuild = 0 // bump for dogfood builds, public betas, etc.
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    namespace "com.danielstone.materialaboutlibrarydemo"
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.danielstone.materialaboutlibrarydemo"
-        minSdkVersion 15
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}" + (versionPatch == 0 ? "" : ".${versionPatch}")
@@ -26,10 +27,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.3.0-alpha04', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.6.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    
+
     implementation project(':library')
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
@@ -37,5 +38,5 @@ dependencies {
     implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
     implementation 'net.yslibrary.licenseadapter:licenseadapter:3.0.0'
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
 }

@@ -3,11 +3,10 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1' // Add this line
+        classpath 'com.android.tools.build:gradle:8.5.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,19 +16,15 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 ext {
-    compileSdkVersion = 29
+    compileSdkVersion = 35
     targetSdkVersion = compileSdkVersion
-    minSdkVersion = 14
+    minSdkVersion = 21
 
-    appCompatVersion = '1.1.0'
-    materialVersion = '1.1.0'
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    appCompatVersion = '1.7.0'
+    materialVersion = '1.12.0'
 }
