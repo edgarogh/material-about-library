@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 group = 'com.github.daniel-stoneuk'
 
@@ -6,6 +7,8 @@ def versionMajor = 3
 def versionMinor = 1
 def versionPatch = 2
 def versionBuild = 0 // bump for dogfood builds, public betas, etc.
+
+def versionFullName = "${versionMajor}.${versionMinor}" + (versionPatch == 0 ? "" : ".${versionPatch}")
 
 android {
     namespace "com.danielstone.materialaboutlibrary"
@@ -15,7 +18,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-        versionName "${versionMajor}.${versionMinor}" + (versionPatch == 0 ? "" : ".${versionPatch}")
+        versionName versionFullName
     }
 
     buildTypes {
@@ -24,10 +27,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = group
+            artifactId = 'materialaboutlibrary'
+            version = versionFullName
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
 }
